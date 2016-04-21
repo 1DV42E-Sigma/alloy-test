@@ -30,7 +30,7 @@ namespace Alloy.Business.Tags
 
             var contentLocator = ServiceLocator.Current.GetInstance<IContentRepository>();
 
-            var start = FindParentByPageType(currentPage, typeof(BlogStartPage), contentLocator);
+            var start = FindParentByPageType(currentPage, typeof(CompareStartPage), contentLocator);
 
             var urlResolver = ServiceLocator.Current.GetInstance<UrlResolver>();
             var pageUrl = urlResolver.GetUrl(start.ContentLink);
@@ -42,7 +42,7 @@ namespace Alloy.Business.Tags
 
         protected PageData FindParentByPageType(PageData pd, Type pagetype, IContentRepository contentLocator)
         {
-            if (pd is BlogStartPage)
+            if (pd is CompareStartPage)
             {
                 return pd;
             }
@@ -52,7 +52,7 @@ namespace Alloy.Business.Tags
 
         public IEnumerable<TagItem> CalculateTags(PageReference startPoint)
         {
-            var blogs = ContentLocator.Service.FindPagesByPageType(startPoint, true, typeof(BlogItemPage).GetPageType().ID);
+            var blogs = ContentLocator.Service.FindPagesByPageType(startPoint, true, typeof(OrganisationalUnitPage).GetPageType().ID);
 
             var tags = new List<TagItem>();
 

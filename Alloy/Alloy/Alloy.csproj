@@ -263,6 +263,7 @@
     <Compile Include="Business\Channels\DisplayResolutions.cs" />
     <Compile Include="Business\Channels\MobileChannel.cs" />
     <Compile Include="Business\Channels\WebChannel.cs" />
+    <Compile Include="Business\Compare\CompareInitialization.cs" />
     <Compile Include="Business\ContentExtensions.cs" />
     <Compile Include="Business\ContentLocator.cs" />
     <Compile Include="Business\ContentProviders\ClonedContentProvider.cs" />
@@ -290,9 +291,14 @@
     <Compile Include="Business\SearchService.cs" />
     <Compile Include="Business\StructureMapDependencyResolver.cs" />
     <Compile Include="Business\UIDescriptors\ContainerPageUIDescriptor.cs" />
+    <Compile Include="Controllers\OrganisationalUnitController.cs" />
+    <Compile Include="Controllers\OrganisationalUnitListBlockController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\BlogItemController.cs" />
+    <Compile Include="Controllers\CategoryListBlockController.cs" />
     <Compile Include="Controllers\BlogListBlockController.cs" />
     <Compile Include="Controllers\BlogStartPageController.cs" />
+    <Compile Include="Controllers\CompareStartPageController.cs" />
     <Compile Include="Controllers\ContactBlockController.cs" />
     <Compile Include="Controllers\DefaultPageController.cs" />
     <Compile Include="Controllers\ImageFileController.cs" />
@@ -301,6 +307,7 @@
     <Compile Include="Controllers\PreviewController.cs" />
     <Compile Include="Controllers\SearchPageController.cs" />
     <Compile Include="Controllers\StartPageController.cs" />
+    <Compile Include="Controllers\TagCloudBlockController.cs" />
     <Compile Include="Controllers\VideoFileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -314,6 +321,7 @@
     <Compile Include="Models\Blocks\ButtonBlock.cs" />
     <Compile Include="Models\Blocks\Compare\CategoryListBlock.cs" />
     <Compile Include="Models\Blocks\ContactBlock.cs" />
+    <Compile Include="Models\Blocks\DefaultBlock1.cs" />
     <Compile Include="Models\Blocks\EditorialBlock.cs" />
     <Compile Include="Models\Blocks\FormBlock.cs" />
     <Compile Include="Models\Blocks\JumbotronBlock.cs" />
@@ -332,6 +340,7 @@
     <Compile Include="Models\Pages\Blog\BlogStartPage.cs" />
     <Compile Include="Models\Pages\Compare\CategoryPage.cs" />
     <Compile Include="Models\Pages\Compare\CompareStartPage.cs" />
+    <Compile Include="Models\Pages\Compare\OrganisationalUnitFolderPage.cs" />
     <Compile Include="Models\Pages\Compare\OrganisationalUnitPage.cs" />
     <Compile Include="Models\Pages\ContactPage.cs" />
     <Compile Include="Models\Pages\ContainerPage.cs" />
@@ -347,7 +356,11 @@
     <Compile Include="Models\Properties\PropertyStringList.cs" />
     <Compile Include="Models\SiteContentType.cs" />
     <Compile Include="Models\SiteImageUrl.cs" />
+    <Compile Include="Models\ViewModels\OrganisationalUnitPageModel.cs" />
+    <Compile Include="Models\ViewModels\OrganisationalUnitListModel.cs" />
+    <Compile Include="Models\ViewModels\CategoryPageModel.cs" />
     <Compile Include="Models\ViewModels\BlogItemPageModel.cs" />
+    <Compile Include="Models\ViewModels\CategoryListModel.cs" />
     <Compile Include="Models\ViewModels\BlogListModel.cs" />
     <Compile Include="Models\ViewModels\ContactBlockModel.cs" />
     <Compile Include="Models\ViewModels\ContentRenderingErrorModel.cs" />
@@ -475,6 +488,16 @@
     <Content Include="Views\BlogListPage\Index.cshtml" />
     <Content Include="Views\BlogStartPage\Index.cshtml" />
     <Content Include="Views\Shared\Blocks\BlogArchiveBlock.cshtml" />
+    <Content Include="Views\CompareStartPage\Index.cshtml" />
+    <Content Include="Views\CategoryListBlock\Index.cshtml" />
+    <Content Include="Views\OrganisationalUnitListBlock\Index.cshtml" />
+    <Content Include="Views\CategoryPage\Index.cshtml" />
+    <Content Include="Views\OrganisationalUnit\Full.cshtml" />
+    <Content Include="Views\OrganisationalUnit\Preview.cshtml" />
+    <Content Include="Views\Category\Full.cshtml" />
+    <Content Include="Views\Category\Preview.cshtml" />
+    <Content Include="Views\OrganisationalUnitsFolderPage\Index.cshtml" />
+    <Content Include="Views\OrganisationalUnitPage\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

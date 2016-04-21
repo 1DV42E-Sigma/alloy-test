@@ -3,24 +3,22 @@ using System.ComponentModel.DataAnnotations;
 using EPiServer.Core;
 using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
-using EPiServer.SpecializedProperties;
-using Alloy.Models.Blocks;
-using Alloy.Business;
 
 namespace Alloy.Models.Pages
 {
     [SiteContentType(
         GroupName = "Compare",
-        GUID = "8f421f96-a21b-4946-bbc1-046c914a9ad7", 
-        DisplayName = "Compare Start", 
-        Description = "Compare Start Page with categories")]
+        GUID = "2a9d3fd5-627a-4503-b026-04ab66f76439",
+        DisplayName = "OrganisationalUnitFolderPage",
+        Description = "A folder page containing all organisational unit pages for the compare")]
     //[SiteImageUrl(Global.StaticGraphicsFolderPath + "page-type-thumbnail-article.png")]
     [AvailableContentTypes(
         Availability.Specific,
-        Include = new[] { typeof(CategoryPage), typeof(OrganisationalUnitFolderPage) })]  // Pages we can create under the start page...
+        Include = new[] { typeof(OrganisationalUnitPage) })]  // Pages we can create under the start page...
 
-    public class CompareStartPage : StandardPage
+    public class OrganisationalUnitFolderPage : StandardPage
     {
+        /*
         [Display(GroupName = SystemTabNames.Content)]
         public virtual string Heading { get; set; }
 
@@ -30,17 +28,17 @@ namespace Alloy.Models.Pages
         [Display(GroupName = SystemTabNames.Content)]
         public virtual CategoryListBlock CategoryList { get; set; }
 
-        /*
-        [Display(GroupName = SystemTabNames.Content)]
-        public virtual TagCloudBlock TagCloud { get; set; }
+        
+        //[Display(GroupName = SystemTabNames.Content)]
+        //public virtual TagCloudBlock TagCloud { get; set; }
 
-        [Display(GroupName = SystemTabNames.Content)]
-        public virtual BlogArchiveBlock Archive { get; set; }
-        */
+        //[Display(GroupName = SystemTabNames.Content)]
+        //public virtual BlogArchiveBlock Archive { get; set; }
+        
 
         [Display(GroupName = SystemTabNames.Content)]
         public virtual ContentArea RightContentArea { get; set; }
-
+        */
 
         #region IInitializableContent
 
@@ -52,8 +50,8 @@ namespace Alloy.Models.Pages
         {
             base.SetDefaultValues(contentType);
 
-            CategoryList.PageTypeFilter = typeof(CategoryPage).GetPageType();
-            CategoryList.Recursive = true;
+            //CategoryList.PageTypeFilter = typeof(CategoryPage).GetPageType();
+            //CategoryList.Recursive = true;
         }
 
         #endregion

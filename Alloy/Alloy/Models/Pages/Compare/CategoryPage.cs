@@ -5,6 +5,7 @@ using EPiServer.DataAbstraction;
 using EPiServer.DataAnnotations;
 using EPiServer.SpecializedProperties;
 using Alloy.Models.Blocks;
+using Alloy.Business;
 
 namespace Alloy.Models.Pages
 {
@@ -31,5 +32,22 @@ namespace Alloy.Models.Pages
 
         [Display(GroupName = SystemTabNames.Content)]
         public virtual ContentArea RightContentArea { get; set; }
+
+
+        #region IInitializableContent
+
+        /// <summary>
+        /// Sets the default property values on the content data.
+        /// </summary>
+        /// <param name="contentType">Type of the content.</param>
+        public override void SetDefaultValues(ContentType contentType)
+        {
+            base.SetDefaultValues(contentType);
+
+            //OrganisationalUnitList.PageTypeFilter = typeof(OrganisationalUnitPage).GetPageType();
+            //OrganisationalUnitList.Recursive = true;
+        }
+
+        #endregion
     }
 }

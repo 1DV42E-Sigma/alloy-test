@@ -3,17 +3,18 @@ using System.Linq;
 using System.Web.Mvc;
 using EPiServer.Core;
 using EPiServer.Filters;
-using EPiServer.Templates.Blog.Mvc.Business;
-using EPiServer.Templates.Blog.Mvc.Models.Blocks;
-using EPiServer.Templates.Blog.Mvc.Models.ViewModels;
+using Alloy.Business;
+using Alloy.Models.Blocks;
+using Alloy.Models.ViewModels;
 using EPiServer.Web.Mvc;
 using EPiServer.Web.Routing;
 using EPiServer.ServiceLocation;
 using EPiServer.DataAbstraction;
-using EPiServer.Templates.Blog.Mvc.Business.Tags;
+using Alloy.Business.Tags;
 using System.Web;
+using EPiServer;
 
-namespace EPiServer.Templates.Blog.Mvc.Controllers
+namespace Alloy.Controllers
 {
     public class TagCloudBlockController : BlockController<TagCloudBlock>
     {
