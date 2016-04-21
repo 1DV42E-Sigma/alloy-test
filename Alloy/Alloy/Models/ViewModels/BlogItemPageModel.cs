@@ -11,6 +11,7 @@ namespace Alloy.Models.ViewModels
         public BlogItemPageModel(BlogItemPage currentPage)
             : base(currentPage)
         {}
+        /*
 
         public IEnumerable<TagItem> Tags { get; set; }
      
@@ -28,5 +29,6 @@ namespace Alloy.Models.ViewModels
             public string Title { get; set; }
             public string Url { get; set; }
         }
+        */
     }
 }

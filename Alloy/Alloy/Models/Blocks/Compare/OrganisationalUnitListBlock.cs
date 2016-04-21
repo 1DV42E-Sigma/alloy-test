@@ -15,6 +15,7 @@ namespace Alloy.Models.Blocks
 
     public class OrganisationalUnitListBlock : SiteBlockData
     {
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 1)]
@@ -42,6 +43,8 @@ namespace Alloy.Models.Blocks
         [DefaultValue(3)]
         public virtual int Count { get; set; }
 
+        */
+
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 4, Name = "Sort Order")]
@@ -50,19 +53,18 @@ namespace Alloy.Models.Blocks
         [BackingType(typeof(PropertyNumber))]
         public virtual FilterSortOrder SortOrder { get; set; }
 
+
         /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 5)]
         public virtual PageReference Root { get; set; }
-        */
-
+        
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 7, Name = "Category Filter")]
         public virtual CategoryList CategoryFilter { get; set; }
         
-        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 6, Name = "Page Type Filter")]
@@ -85,9 +87,11 @@ namespace Alloy.Models.Blocks
         {
             base.SetDefaultValues(contentType);
 
+            /*
             Count = 3;
             IncludeIntroduction = true;
             IncludePublishDate = true;
+            */
             SortOrder = FilterSortOrder.PublishedDescending;
             //Recursive = true;
         }

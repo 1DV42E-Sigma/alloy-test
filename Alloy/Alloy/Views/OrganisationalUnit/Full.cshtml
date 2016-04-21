@@ -9,7 +9,7 @@
     <div @Html.EditAttributes("PageCategory")>
         <span>Tags: </span>
 
-        @foreach (var item in Model.Tags)
+        @foreach (var item in Model.Categories)
         {
             <span class="icon-tags">&nbsp;</span> <a href="@item.Url">@item.Title</a>
         }

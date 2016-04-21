@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using EPiServer.Core.Html;
 using EPiServer.DynamicContent;
 using EPiServer;
+using Alloy.Helpers.Compare;
 
 namespace Alloy.Controllers
 {
@@ -34,29 +35,29 @@ namespace Alloy.Controllers
 
         public override ActionResult Index(CategoryListBlock currentBlock)
         {
+            //var category = Request.RequestContext.GetCustomRouteData<Category>("category");
 
-            var category = Request.RequestContext.GetCustomRouteData<Category>("category");
+            var categories = FindPages(currentBlock); //, category);
 
-            var blogs = FindPages(currentBlock, category);
+            categories = Sort(categories, currentBlock.SortOrder);
 
-            blogs = Sort(blogs, currentBlock.SortOrder);
-
+            /*
             if(currentBlock.Count > 0)
             {
                 blogs = blogs.Take(currentBlock.Count);
             }
-
+            */
 
             var model = new CategoryListModel(currentBlock)
                 {
-                    Categories = blogs, 
-                    Heading = category != null ? "Category tags for post: "+category.Name : string.Empty
+                    Categories = categories, 
+                    //Heading = category != null ? "Category tags for post: "+category.Name : string.Empty
                 };
 
             return PartialView(model);
         }
-
-        public ActionResult Preview(PageData currentPage, CategoryListModel blogModel)
+        
+        public ActionResult Preview(PageData currentPage, CategoryListModel categoryListModel)
         {
             var pd = (CategoryPage)currentPage;
             PreviewTextLength = 200;
@@ -64,13 +65,12 @@ namespace Alloy.Controllers
             var model = new CategoryPageModel(pd)
             {
                 PreviewText = GetPreviewText(pd),
-                ShowIntroduction = blogModel.ShowIntroduction,
-                ShowPublishDate = blogModel.ShowPublishDate
+                //ShowIntroduction = blogModel.ShowIntroduction,
+                //ShowPublishDate = blogModel.ShowPublishDate
             };
 
             return PartialView("Preview", model);
         }
-
 
         protected string GetPreviewText(CategoryPage page)
         {
@@ -100,8 +100,47 @@ namespace Alloy.Controllers
             return TextIndexer.StripHtml(previewText, PreviewTextLength);
         }
 
+        private IEnumerable<PageData> FindPages(CategoryListBlock currentBlock) //, Category categoryParameter)
+        {
+            IEnumerable<PageData> pages = null;
 
-        private IEnumerable<PageData> FindPages(CategoryListBlock currentBlock, Category category)
+            var pageRouteHelper = ServiceLocator.Current.GetInstance<PageRouteHelper>();
+            PageData currentPage = pageRouteHelper.Page ?? contentLoader.Get<PageData>(ContentReference.StartPage);
+            PageReference listRoot = currentPage.PageLink;
+
+            if (currentPage.PageTypeName == typeof(CompareStartPage).GetPageType().Name)
+            {
+
+                //var categoryRepository = ServiceLocator.Current.GetInstance<CategoryRepository>();
+                //var category = CategoryHelper.FindCompareCategory(categoryRepository, currentPage.Name);
+
+                //if (category != null)
+                //{
+                //var listRoot = currentBlock.Root ?? currentPage.ContentLink.ToPageReference();
+                //var compareStartPage = contentLoader.Get<CompareStartPage>(currentPage.ContentLink); //GetCompareStartPage(currentPage);
+
+
+                //if (compareStartPage != null)
+                //{
+                pages = contentLoader.GetChildren<CategoryPage>(currentPage.ContentLink);
+                    /*if (ouFolderPage != null)
+                    {
+                        var ouPages = contentLoader.GetChildren<OrganisationalUnitPage>(ouFolderPage.ContentLink).Where(o => o.Category.Contains(category.ID)).ToList();
+                        if (ouPages != null && ouPages.Count > 0)
+                        {
+                            pages = ouPages;
+                        }
+                    }*/
+                    //contentLoader.GetChildren<PageData>(compareStartPage.ContentLink.ToPageReference());
+                    //PageReference ouPage = CompareInitialization.GetOrganisationalUnitsPageRef(compareStartPage, contentRepository);
+
+                //}
+            }
+
+            return pages ?? new List<PageData>();
+        }
+        /*
+        private IEnumerable<PageData> FindPages_Old(CategoryListBlock currentBlock, Category category)
         {
             var pageRouteHelper = ServiceLocator.Current.GetInstance<PageRouteHelper>();
             PageData currentPage = pageRouteHelper.Page ?? contentLoader.Get<PageData>(ContentReference.StartPage);
@@ -148,6 +187,7 @@ namespace Alloy.Controllers
             pages = pages.Where(p => p.PageTypeName == typeof(CategoryPage).GetPageType().Name).ToList();
             return pages;
         }
+        */
 
         private IEnumerable<PageData> Sort(IEnumerable<PageData> pages, FilterSortOrder sortOrder)
         {

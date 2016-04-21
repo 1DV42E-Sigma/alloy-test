@@ -23,6 +23,7 @@ namespace Alloy.Controllers
 {
     public class BlogListBlockController : BlockController<BlogListBlock>
     {
+        /*
         public int PreviewTextLength { get; set; }
         private ContentLocator contentLocator;
         private IContentLoader contentLoader;
@@ -172,6 +173,7 @@ namespace Alloy.Controllers
             return asCollection;
         }
 
-      
+        */
+
     }
 }

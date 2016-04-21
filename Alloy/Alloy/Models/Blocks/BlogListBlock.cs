@@ -16,6 +16,7 @@ namespace Alloy.Models.Blocks
     [SiteImageUrl]
     public class BlogListBlock : SiteBlockData
     {
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 1)]
@@ -89,5 +90,6 @@ namespace Alloy.Models.Blocks
         }
 
         #endregion
+        */
     }
 }

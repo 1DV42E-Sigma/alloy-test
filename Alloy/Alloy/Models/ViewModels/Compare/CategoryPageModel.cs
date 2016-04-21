@@ -18,10 +18,14 @@ namespace Alloy.Models.ViewModels
         public DateTime StartPublish { get; set; }
         public XhtmlString MainBody { get; set; }
 
+        /*
         public bool ShowPublishDate { get; set; }
 
         public bool ShowIntroduction { get; set; }
+        
         public CategoryList Category { get; set; }
+        */
+
         /*
         public class TagItem
         {
