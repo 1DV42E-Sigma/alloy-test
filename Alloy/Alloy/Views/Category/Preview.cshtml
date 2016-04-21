@@ -1,0 +1,19 @@
+﻿@using EPiServer.Core
+@using EPiServer.Editor
+@model CategoryPageModel
+
+ <div class="listResult">
+        <h3>
+            @Html.PageLink(Model.CurrentPage)
+        </h3>
+        @if(Model.ShowPublishDate)
+        {
+            <p class="date">@Html.DisplayFor(x => x.CurrentPage.StartPublish)</p>
+        }
+        @if(Model.ShowIntroduction)
+        {           
+            <p>@Model.PreviewText</p>
+        }
+
+        <hr />
+    </div>

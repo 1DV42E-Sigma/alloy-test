@@ -1,0 +1,12 @@
+﻿@model CategoryListModel
+
+<h2>
+   @Model.Heading
+    
+</h2>
+<hr />
+
+@foreach(var page in Model.Categories)
+{
+    @Html.Action("Preview", "Category", new { currentPage = page , categoryModel = Model})
+}

@@ -1,5 +1,5 @@
 ﻿@using Alloy
-@model PageViewModel<BlogStartPage>
+@model PageViewModel<OrganisationalUnitsFolderPage>
 
 @{ Layout = "~/Views/Shared/Layouts/_TwoPlusOne.cshtml"; }
 
@@ -9,18 +9,14 @@
    @* <div class="span8 clearfix" @Html.EditAttributes(x => x.CurrentPage.MainBody)>
         @Html.DisplayFor(m => m.CurrentPage.MainBody)
     </div>*@
-    <div class="span8 clearfix">
-   @Html.PropertyFor(x => x.CurrentPage.BlogList)
-    </div>
 </div>
 @Html.PropertyFor(x => x.CurrentPage.MainContentArea, new { CssClass = "row equal-height", Tag = Global.ContentAreaTags.TwoThirdsWidth })
 
 @section RelatedContent{
-    
 
-    @Html.PropertyFor(x => x.CurrentPage.TagCloud)
+    @* Html.PropertyFor(x => x.CurrentPage.TagCloud) *@
 
-    @Html.PropertyFor(x => x.CurrentPage.Archive)
+    @* Html.PropertyFor(x => x.CurrentPage.Archive) *@
 
     @Html.PropertyFor(x => x.CurrentPage.RightContentArea, new { CssClass = "row equal-height", Tag = Global.ContentAreaTags.OneThirdWidth })
 }

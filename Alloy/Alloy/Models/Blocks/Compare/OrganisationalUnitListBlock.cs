@@ -50,11 +50,19 @@ namespace Alloy.Models.Blocks
         [BackingType(typeof(PropertyNumber))]
         public virtual FilterSortOrder SortOrder { get; set; }
 
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 5)]
         public virtual PageReference Root { get; set; }
+        */
 
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 7, Name = "Category Filter")]
+        public virtual CategoryList CategoryFilter { get; set; }
+        
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 6, Name = "Page Type Filter")]
@@ -62,13 +70,10 @@ namespace Alloy.Models.Blocks
 
         [Display(
             GroupName = SystemTabNames.Content,
-            Order = 7, Name = "Category Filter")]
-        public virtual CategoryList CategoryFilter { get; set; }
-
-        [Display(
-            GroupName = SystemTabNames.Content,
             Order = 8)]
         public virtual bool Recursive { get; set; }
+        */
+
 
         #region IInitializableContent
 
@@ -84,7 +89,7 @@ namespace Alloy.Models.Blocks
             IncludeIntroduction = true;
             IncludePublishDate = true;
             SortOrder = FilterSortOrder.PublishedDescending;
-            Recursive = true;
+            //Recursive = true;
         }
 
         #endregion
