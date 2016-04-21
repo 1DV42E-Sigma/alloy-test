@@ -14,6 +14,7 @@ using EPiServer.DataAbstraction;
 using System.Web.Routing;
 using EPiServer.Web.Routing;
 using EPiServer;
+using Alloy.Helpers.Compare;
 
 namespace Alloy.Business.Compare
 {
@@ -21,9 +22,7 @@ namespace Alloy.Business.Compare
     [ModuleDependency(typeof(EPiServer.Web.InitializationModule))]
     public class CompareInitialization : IInitializableModule
     {
-        public static readonly string ORGANISATIONAL_UNITS_FOLDER_NAME = "OrganisationalUnits";
-        private const string CATEGORY_ROOT_NAME = "CompareCategories";
-        private const string CATEGORY_ROOT_DESCRIPTION = "Jämförelse-kategorier";
+        private const string ORGANISATIONAL_UNIT_FOLDER_NAME = "OrganisationalUnits";
 
         public void Initialize(InitializationEngine context)
         {
@@ -72,7 +71,7 @@ namespace Alloy.Business.Compare
                 string newName = e.Content.Name;
 
                 var categoryRepository = ServiceLocator.Current.GetInstance<CategoryRepository>();
-                var category = FindCompareCategory(categoryRepository, oldName);
+                var category = CategoryHelper.FindCompareCategory(categoryRepository, oldName);
                 if (category != null)
                 {
                     category = category.CreateWritableClone();
@@ -81,7 +80,7 @@ namespace Alloy.Business.Compare
                 }
                 else
                 {
-                    SaveCompareCategory(categoryRepository, newName, newName);
+                    CategoryHelper.SaveCompareCategory(categoryRepository, newName, newName);
                 }
             }
         }
@@ -103,10 +102,10 @@ namespace Alloy.Business.Compare
             else if (string.Equals(e.Page.PageTypeName, typeof(CategoryPage).GetPageType().Name, StringComparison.OrdinalIgnoreCase))
             {
                 var categoryRepository = ServiceLocator.Current.GetInstance<CategoryRepository>();
-                var category = FindCompareCategory(categoryRepository, e.Page.Name);
+                var category = CategoryHelper.FindCompareCategory(categoryRepository, e.Page.Name);
                 if (category == null)
                 {
-                    SaveCompareCategory(categoryRepository, e.Page.Name, e.Page.Name);
+                    CategoryHelper.SaveCompareCategory(categoryRepository, e.Page.Name, e.Page.Name);
                 }
             }
             else if (string.Equals(e.Page.PageTypeName, typeof(OrganisationalUnitPage).GetPageType().Name, StringComparison.OrdinalIgnoreCase))
@@ -124,73 +123,61 @@ namespace Alloy.Business.Compare
                 PageData startPage = (page is CompareStartPage ? page : null);
                 if (startPage != null)
                 {
-                    e.Page.ParentLink = GetOrganisationalUnitsPageRef(startPage, contentRepository);
-
-                    if (!String.IsNullOrWhiteSpace(categoryName))
+                    var ouFolderPage = GetOrganisationalUnitsPageRef(startPage, contentRepository);
+                    var existingOuPage = (ouFolderPage != null ? contentRepository.GetChildren<OrganisationalUnitPage>(ouFolderPage).FirstOrDefault() : null);
+                    if (existingOuPage == null)
                     {
-                        var categoryRepository = ServiceLocator.Current.GetInstance<CategoryRepository>();
-                        Category category = FindCompareCategory(categoryRepository, categoryName);
-                        if (category == null)
-                        {
-                            category = SaveCompareCategory(categoryRepository, categoryName, categoryName);
-                        }
+                        e.Page.ParentLink = GetOrganisationalUnitsPageRef(startPage, contentRepository);
 
-                        //add category to the ou page
-                        e.Page.Category.Add(category.ID);
+                        if (!String.IsNullOrWhiteSpace(categoryName))
+                        {
+                            var categoryRepository = ServiceLocator.Current.GetInstance<CategoryRepository>();
+                            Category category = CategoryHelper.FindCompareCategory(categoryRepository, categoryName);
+                            if (category == null)
+                            {
+                                category = CategoryHelper.SaveCompareCategory(categoryRepository, categoryName, categoryName);
+                            }
+
+                            //add category to the ou page
+                            e.Page.Category.Add(category.ID);
+                        }
+                    }
+                    else
+                    {
+                        //cancel, ou page already exists in this comparison content
+                        e.CancelReason = "An organisational unit with the name " + e.Page.Name + " already exists. Please choose another name or edit the existing one.";
+                        e.CancelAction = true;
+
                     }
                 }
                 else
                 {
-                    //cancel
+                    //cancel, no compare start page
                     e.CancelReason = "Could not find the compare start page";
                     e.CancelAction = true;
                 }
             }
         }
         
-        private Category SaveCompareCategory(CategoryRepository repository, string name, string description)
-        {
-            var category = new Category(GetCompareRootCategory(repository), name);
-            category.Description = description;
-            repository.Save(category);
-            return category;
-        }
-        public static Category FindCompareCategory(CategoryRepository repository, string name)
-        {
-            return GetCompareRootCategory(repository).FindChild(name);
-        }
-        private static Category GetCompareRootCategory(CategoryRepository repository)
-        {
-            var compareCategory = repository.Get(CATEGORY_ROOT_NAME); // Returns a read-only instance
-            if (compareCategory != null)
-            {
-                //repository.Delete(compareCategory);
-                return compareCategory;
-            }
-
-            Category newCategory = new Category(repository.GetRoot(), CATEGORY_ROOT_NAME);
-            newCategory.Description = CATEGORY_ROOT_DESCRIPTION;
-            repository.Save(newCategory);
-            return newCategory;
-        }
+        
 
         // in here we know that the page is a compare start page and now we must create the organisational unit page unless already created
-        public static PageReference GetOrganisationalUnitsPageRef(PageData compareStart, IContentRepository contentRepository)
+        private static PageReference GetOrganisationalUnitsPageRef(PageData compareStart, IContentRepository contentRepository)
         {
             foreach (var current in contentRepository.GetChildren<PageData>(compareStart.ContentLink))
             {
-                if (current.Name == ORGANISATIONAL_UNITS_FOLDER_NAME)
+                if (current.Name == ORGANISATIONAL_UNIT_FOLDER_NAME)
                 {
                     return current.PageLink;
                 }
             }
-            return CreateOrganisationalUnitsPage(contentRepository, compareStart.ContentLink);
+            return CreateOrganisationalUnitFolderPage(contentRepository, compareStart.ContentLink);
         }
 
-        private static PageReference CreateOrganisationalUnitsPage(IContentRepository contentRepository, ContentReference parent)
+        private static PageReference CreateOrganisationalUnitFolderPage(IContentRepository contentRepository, ContentReference parent)
         {
             OrganisationalUnitFolderPage defaultPageData = contentRepository.GetDefault<OrganisationalUnitFolderPage>(parent, typeof(OrganisationalUnitFolderPage).GetPageType().ID, LanguageSelector.AutoDetect().Language);
-            defaultPageData.PageName = ORGANISATIONAL_UNITS_FOLDER_NAME;
+            defaultPageData.PageName = ORGANISATIONAL_UNIT_FOLDER_NAME;
             defaultPageData.URLSegment = UrlSegment.CreateUrlSegment(defaultPageData);
             return contentRepository.Save(defaultPageData, SaveAction.Publish, AccessLevel.Publish).ToPageReference();
         }

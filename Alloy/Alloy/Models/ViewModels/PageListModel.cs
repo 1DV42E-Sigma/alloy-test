@@ -4,6 +4,7 @@ using Alloy.Models.Blocks;
 
 namespace Alloy.Models.ViewModels
 {
+    /*
     public class PageListModel
     {
         public PageListModel(PageListBlock block)
@@ -17,4 +18,5 @@ namespace Alloy.Models.ViewModels
         public bool ShowIntroduction { get; set; }
         public bool ShowPublishDate { get; set; }
     }
+    */
 }

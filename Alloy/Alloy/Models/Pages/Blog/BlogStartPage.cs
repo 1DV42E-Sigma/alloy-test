@@ -20,6 +20,7 @@ namespace Alloy.Models.Pages
  
     public class BlogStartPage : StandardPage
     {
+        /*
         [Display(GroupName = SystemTabNames.Content)]
         public virtual string Heading { get; set; }
 
@@ -53,5 +54,6 @@ namespace Alloy.Models.Pages
         }
 
         #endregion
+        */
     }
 }

@@ -35,8 +35,8 @@ namespace Alloy.Controllers
             var model = new CategoryPageModel(pd)
             {
                 PreviewText = GetPreviewText(pd),
-                ShowIntroduction = categoryModel.ShowIntroduction,
-                ShowPublishDate = categoryModel.ShowPublishDate
+                //ShowIntroduction = categoryModel.ShowIntroduction,
+                //ShowPublishDate = categoryModel.ShowPublishDate
             };
 
             return PartialView("Preview", model);
@@ -48,15 +48,15 @@ namespace Alloy.Controllers
 
             var model = new CategoryPageModel(currentPage)
             {
-                Category = currentPage.Category,
+                //Category = currentPage.Category,
                 PreviewText = GetPreviewText(currentPage),
                 MainBody = currentPage.MainBody,
                 StartPublish = currentPage.StartPublish
             };
 
             var editHints = ViewData.GetEditHints<CategoryPageModel, CategoryPage>();
-            editHints.AddConnection(m => m.Category, p => p.Category);
-            editHints.AddFullRefreshFor(p => p.Category);
+            //editHints.AddConnection(m => m.Category, p => p.Category);
+            //editHints.AddFullRefreshFor(p => p.Category);
             editHints.AddFullRefreshFor(p => p.StartPublish);
             
            

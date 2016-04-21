@@ -13,6 +13,7 @@ namespace Alloy.Controllers
 {
     public class PageListBlockController : BlockController<PageListBlock>
     {
+        /*
         private ContentLocator contentLocator;
         private IContentLoader contentLoader;
         public PageListBlockController(ContentLocator contentLocator, IContentLoader contentLoader)
@@ -85,5 +86,6 @@ namespace Alloy.Controllers
             sortFilter.Sort(asCollection);
             return asCollection;
         }
+        */
     }
 }

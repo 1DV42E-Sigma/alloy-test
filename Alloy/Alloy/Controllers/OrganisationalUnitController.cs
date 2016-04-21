@@ -20,6 +20,7 @@ using EPiServer.ServiceLocation;
 using EPiServer.Web.Routing;
 using Alloy.Business.Tags;
 using EPiServer.Web.Mvc;
+using Alloy.Helpers.Compare;
 
 namespace Alloy.Controllers
 {
@@ -34,10 +35,10 @@ namespace Alloy.Controllers
 
             var model = new OrganisationalUnitPageModel(pd)
             {
-                Tags = GetTags(pd),
+                Categories = CategoryHelper.GetCategoryViewModels(pd),
                 PreviewText = GetPreviewText(pd),
-                ShowIntroduction = organisationalUnitModel.ShowIntroduction,
-                ShowPublishDate = organisationalUnitModel.ShowPublishDate
+                //ShowIntroduction = organisationalUnitModel.ShowIntroduction,
+                //ShowPublishDate = organisationalUnitModel.ShowPublishDate
             };
 
             return PartialView("Preview", model);
@@ -50,7 +51,7 @@ namespace Alloy.Controllers
             var model = new OrganisationalUnitPageModel(currentPage)
             {
                 Category = currentPage.Category,
-                Tags = GetTags(currentPage),
+                Categories = CategoryHelper.GetCategoryViewModels(currentPage),
                 PreviewText = GetPreviewText(currentPage),
                 MainBody = currentPage.MainBody,
                 StartPublish = currentPage.StartPublish
@@ -69,33 +70,16 @@ namespace Alloy.Controllers
         public ActionResult Index(OrganisationalUnitPage currentPage)
         {
              var model = PageViewModel.Create(currentPage);
-
-          
-                //Connect the view models logotype property to the start page's to make it editable
-                var editHints = ViewData.GetEditHints<PageViewModel<OrganisationalUnitPage>, OrganisationalUnitPage>();
-                editHints.AddConnection(m => m.CurrentPage.Category, p => p.Category);
-                editHints.AddConnection(m => m.CurrentPage.StartPublish, p => p.StartPublish);
-
-
+            
+            //Connect the view models logotype property to the start page's to make it editable
+            var editHints = ViewData.GetEditHints<PageViewModel<OrganisationalUnitPage>, OrganisationalUnitPage>();
+            editHints.AddConnection(m => m.CurrentPage.Category, p => p.Category);
+            editHints.AddConnection(m => m.CurrentPage.StartPublish, p => p.StartPublish);
+            
             return View(model);
         }
 
-        public IEnumerable<OrganisationalUnitPageModel.TagItem> GetTags(OrganisationalUnitPage currentPage)
-        {
-            List<OrganisationalUnitPageModel.TagItem> tags = new List<Models.ViewModels.OrganisationalUnitPageModel.TagItem>();
-
-            foreach (var item in currentPage.Category)
-            {
-                Category cat = Category.Find(item);
-
-                tags.Add(new Models.ViewModels.OrganisationalUnitPageModel.TagItem() { Title = cat.Name, Url = TagFactory.Instance.GetTagUrl(currentPage, cat) });
-            }
-
-            return tags;
-        }
-
         
-
         protected string GetPreviewText(OrganisationalUnitPage page)
         {
             if (PreviewTextLength <= 0)

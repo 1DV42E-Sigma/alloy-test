@@ -25,6 +25,7 @@ namespace Alloy.Controllers
 {
     public class BlogItemController : Controller
     {
+        /*
         public int PreviewTextLength { get; set; }
 
         public ActionResult Preview(PageData currentPage, BlogListModel blogModel)
@@ -124,6 +125,7 @@ namespace Alloy.Controllers
             return TextIndexer.StripHtml(previewText, PreviewTextLength);
         }
 
-    
+        */
+
     }
 }

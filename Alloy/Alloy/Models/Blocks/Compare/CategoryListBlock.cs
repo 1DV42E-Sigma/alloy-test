@@ -16,6 +16,7 @@ namespace Alloy.Models.Blocks
 
     public class CategoryListBlock : SiteBlockData
     {
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 1)]
@@ -42,6 +43,7 @@ namespace Alloy.Models.Blocks
             Order = 4)]
         [DefaultValue(3)]
         public virtual int Count { get; set; }
+        */
 
         [Display(
             GroupName = SystemTabNames.Content,
@@ -51,6 +53,7 @@ namespace Alloy.Models.Blocks
         [BackingType(typeof(PropertyNumber))]
         public virtual FilterSortOrder SortOrder { get; set; }
 
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 5)]
@@ -70,6 +73,7 @@ namespace Alloy.Models.Blocks
             GroupName = SystemTabNames.Content,
             Order = 8)]
         public virtual bool Recursive { get; set; }
+        */
 
         #region IInitializableContent
 
@@ -81,11 +85,13 @@ namespace Alloy.Models.Blocks
         {
             base.SetDefaultValues(contentType);
 
+            /*
             Count = 3;
             IncludeIntroduction = true;
             IncludePublishDate = true;
+            */
             SortOrder = FilterSortOrder.PublishedDescending;
-            Recursive = true;
+            //Recursive = true;
         }
 
         #endregion

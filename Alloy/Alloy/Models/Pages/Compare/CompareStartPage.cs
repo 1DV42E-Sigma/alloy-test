@@ -18,7 +18,7 @@ namespace Alloy.Models.Pages
     [AvailableContentTypes(
         Availability.Specific,
         Include = new[] { typeof(CategoryPage), typeof(OrganisationalUnitFolderPage) })]  // Pages we can create under the start page...
-
+  
     public class CompareStartPage : StandardPage
     {
         [Display(GroupName = SystemTabNames.Content)]
@@ -52,8 +52,8 @@ namespace Alloy.Models.Pages
         {
             base.SetDefaultValues(contentType);
 
-            CategoryList.PageTypeFilter = typeof(CategoryPage).GetPageType();
-            CategoryList.Recursive = true;
+            //CategoryList.PageTypeFilter = typeof(CategoryPage).GetPageType();
+            //CategoryList.Recursive = true;
         }
 
         #endregion

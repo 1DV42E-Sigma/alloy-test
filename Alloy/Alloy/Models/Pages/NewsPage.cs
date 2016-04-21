@@ -8,6 +8,7 @@ using Alloy.Models.Blocks;
 
 namespace Alloy.Models.Pages
 {
+    /*
     /// <summary>
     /// Presents a news section including a list of the most recent articles on the site
     /// </summary>
@@ -33,4 +34,5 @@ namespace Alloy.Models.Pages
             NewsList.SortOrder = FilterSortOrder.PublishedDescending;
         }
     }
+    */
 }

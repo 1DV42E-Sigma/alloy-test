@@ -12,13 +12,15 @@ namespace Alloy.Models.ViewModels
         }
         public OrganisationalUnitListModel(OrganisationalUnitListBlock block)
         {
-            Heading = block.Heading;
-            ShowIntroduction = block.IncludeIntroduction;
-            ShowPublishDate = block.IncludePublishDate;
+            //Heading = block.Heading;
+            //ShowIntroduction = block.IncludeIntroduction;
+            //ShowPublishDate = block.IncludePublishDate;
         }
+        /*
         public string Heading { get; set; }
-        public IEnumerable<PageData> OrganisationalUnits { get; set; }
         public bool ShowIntroduction { get; set; }
         public bool ShowPublishDate { get; set; }
+        */
+        public IEnumerable<PageData> OrganisationalUnits { get; set; }
     }
 }

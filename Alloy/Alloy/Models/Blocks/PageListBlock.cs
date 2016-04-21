@@ -14,6 +14,7 @@ namespace Alloy.Models.Blocks
     [SiteImageUrl]
     public class PageListBlock : SiteBlockData
     {
+        /*
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 1)]
@@ -88,5 +89,6 @@ namespace Alloy.Models.Blocks
         }
 
         #endregion
+        */
     }
 }
